@@ -1,0 +1,52 @@
+{
+	"name": "react-chart-lib",
+	"version": "0.0.1",
+	"description": "React and D3 JS based chart library",
+	"main": "src/index.js",
+	"scripts": {
+		"storybook": "start-storybook -p 7766",
+		"start": "npm run storybook",
+		"build-storybook": "build-storybook",
+		"build": "npx rimraf ./dist && tsc && cpy ./src/styles ./dist/styles --flat"
+	},
+	"keywords": [
+		"React JS",
+		"D3 charts",
+		"React Charts"
+	],
+	"author": "Vinothkumar Krishnamoorthy",
+	"license": "GNU 3.0",
+	"devDependencies": {
+		"@babel/core": "^7.17.2",
+		"@storybook/addon-a11y": "^6.4.22",
+		"@storybook/addon-actions": "^6.4.18",
+		"@storybook/addon-console": "^1.2.3",
+		"@storybook/addon-controls": "^6.4.22",
+		"@storybook/addon-docs": "^6.4.19",
+		"@storybook/addon-essentials": "^6.1.21",
+		"@storybook/addon-links": "^6.4.18",
+		"@storybook/addon-viewport": "^6.4.22",
+		"@storybook/react": "^6.1.21",
+		"@testing-library/jest-dom": "^5.16.4",
+		"@testing-library/react": "^12.1.2",
+		"@types/d3-sankey": "^0.11.2",
+		"babel-loader": "^8.2.3",
+		"cpy-cli": "^4.1.0",
+		"html-webpack-plugin": "^5.5.0",
+		"tsconfig-paths-webpack-plugin": "^3.5.2"
+	},
+	"peerDependencies": {
+		"react": ">=17.0.2 <=18.x",
+		"react-dom": ">=17.0.2 <=18.x"
+	},
+	"dependencies": {
+		"@types/d3": "^7.1.0",
+		"classnames": "^2.3.1",
+		"d3": "^7.4.4",
+		"d3-sankey": "^0.12.3"
+	},
+	"files": [
+		"dist"
+	],
+	"publishConfig": {}
+}
