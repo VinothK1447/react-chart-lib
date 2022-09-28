@@ -31,11 +31,6 @@ export interface chartOptions extends HTMLAttributes<HTMLElement> {
 	 * @type {}
 	 */
 	options: areaChartOptions | barChartOptions | pieChartOptions | lineChartOptions | sunburstChartOptions | sankeyChartOptions
-	/**
-	 * Event handler on chart clicks
-	 * @type Function
-	 */
-	onChartClick?: (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => void
 }
 
 type datum = {
@@ -63,6 +58,7 @@ type axisProps = {
 	}
 	label?: string
 	fold?: boolean
+	wrapLength?: number
 	labels?: {
 		left?: {
 			show: boolean
@@ -113,6 +109,10 @@ export type areaChartOptions = {
 	xAxis: axisProps
 	yAxis: axisProps
 	orient?: orientation
+	isClickable?: {
+		clickable: boolean
+		onChartItemClick: Function
+	}
 	legend?: {
 		show: boolean
 		position: legendPosition
@@ -159,6 +159,10 @@ export type barChartOptions = {
 	dualAxes?: boolean
 	centerText?: boolean
 	orient?: orientation
+	isClickable?: {
+		clickable: boolean
+		onChartItemClick: Function
+	}
 	line?: {
 		show: boolean
 		opts?: {
@@ -202,11 +206,16 @@ export type pieChartOptions = {
 	isDonut?: boolean
 	arcSize?: arcSizeOpts
 	showTooltip?: boolean
+	isClickable?: {
+		clickable: boolean
+		onChartItemClick: Function
+	}
 	centerText?: {
 		show: boolean
 		label: string
 		type: string
 		formatter: { formatType: string; format: string }
+		value?: number | string
 	}
 	legend?: {
 		show: boolean
@@ -235,6 +244,10 @@ export type lineChartOptions = {
 	xAxis: axisProps
 	yAxis: axisProps
 	orient?: orientation
+	isClickable?: {
+		clickable: boolean
+		onChartItemClick: Function
+	}
 	legend?: {
 		show: boolean
 		position: legendPosition
@@ -309,6 +322,10 @@ export type progressBarOptions = {
 			format: string
 		}
 	}
+	isClickable?: {
+		clickable: boolean
+		onChartItemClick: Function
+	}
 	classes?: string
 	domain?: string
 	type?: string
@@ -333,6 +350,10 @@ export type comparisonChartOptions = {
 			format: string
 		}
 	}
+	isClickable?: {
+		clickable: boolean
+		onChartItemClick: Function
+	}
 	classes?: string
 	domain?: string | string[]
 	type?: string
@@ -350,6 +371,7 @@ export type lineBarProps = {
 
 export type lineBarOptions = {
 	showTooltip?: boolean
+	wrapLength?: Number
 	labels?: {
 		preLabel: {
 			show: boolean
@@ -367,6 +389,10 @@ export type lineBarOptions = {
 				format: string
 			}
 		}
+	}
+	isClickable?: {
+		clickable: boolean
+		onChartItemClick: Function
 	}
 	classes?: string
 	domain?: string

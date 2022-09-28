@@ -10,7 +10,7 @@ import { margin } from '../utils/Constants'
 
 export const generateGroupedBars = ({ id, data, options, colors }: barChartProps) => {
 	let { svg, bounds } = getSVGInContext({ id })
-	let { xAxis, yAxis, labels, legend } = options
+	let { xAxis, yAxis, labels, legend, isClickable } = options
 	let isGrouped = options.grouped
 	let colorScheme: any = colors || defaultColorScheme
 	let primaryDomain: any = xAxis.domain
@@ -160,11 +160,14 @@ export const generateGroupedBars = ({ id, data, options, colors }: barChartProps
 			renderTooltip(false, event, id)
 		})
 	}
+	if (isClickable?.clickable) {
+		rect.on('click', (e, d) => isClickable?.onChartItemClick && isClickable.onChartItemClick(d))
+	}
 }
 
 export const generateStackedBars = ({ id, data, options }: barChartProps) => {
 	let { svg, bounds } = getSVGInContext({ id })
-	let { xAxis, yAxis, legend } = options
+	let { xAxis, yAxis, legend, isClickable } = options
 	let isStacked = options.stack
 	let primaryDomain: any = xAxis.domain
 	let secondaryDomain: any = yAxis.domain
@@ -237,11 +240,14 @@ export const generateStackedBars = ({ id, data, options }: barChartProps) => {
 				renderTooltip(false, event, id)
 			})
 	}
+	if (isClickable?.clickable) {
+		stackedBar.on('click', (e, d: any) => isClickable?.onChartItemClick && isClickable.onChartItemClick({ obj: d.data, key: e.currentTarget.dataset.value }))
+	}
 }
 
 export const generateBars = ({ id, data, options }: barChartProps) => {
 	let { svg, bounds } = getSVGInContext({ id })
-	let { xAxis, yAxis, labels, dualAxes, showTooltip } = options
+	let { xAxis, yAxis, labels, dualAxes, showTooltip, isClickable } = options
 	let primaryDomain: any = xAxis.domain
 	let secondaryDomain: any = yAxis.domain
 	let primaryDomainType: any = xAxis.type
@@ -322,11 +328,14 @@ export const generateBars = ({ id, data, options }: barChartProps) => {
 			renderTooltip(false, event, id)
 		})
 	}
+	if (isClickable?.clickable) {
+		rect.on('click', (e, d) => isClickable?.onChartItemClick && isClickable.onChartItemClick(d))
+	}
 }
 
 export const generateDualAxesLinedBar = ({ id, data, options }: barChartProps) => {
 	let { svg, bounds } = getSVGInContext({ id })
-	let { xAxis, yAxis, legend, showTooltip, line } = options
+	let { xAxis, yAxis, legend, showTooltip, line, isClickable } = options
 	let primaryDomain: any = xAxis.domain
 	let secondaryDomain: any = yAxis.domain
 	let lineDomain: any = line?.domain
@@ -438,11 +447,14 @@ export const generateDualAxesLinedBar = ({ id, data, options }: barChartProps) =
 			renderTooltip(false, event, id)
 		})
 	}
+	if (isClickable?.clickable) {
+		bar.on('click', (e, d: any) => isClickable?.onChartItemClick && isClickable.onChartItemClick(d.data))
+	}
 }
 
 export const generateDualAxesCenterTextBars = ({ id, data, options }: barChartProps) => {
 	let { svg, bounds } = getSVGInContext({ id })
-	let { xAxis, yAxis, labels, dualAxes, showTooltip } = options
+	let { xAxis, yAxis, labels, dualAxes, showTooltip, isClickable } = options
 	let primaryDomain: any = xAxis.domain
 	let secondaryDomain: any = yAxis.domain
 	let primaryDomainType: any = xAxis.type
@@ -497,6 +509,7 @@ export const generateDualAxesCenterTextBars = ({ id, data, options }: barChartPr
 			.attr('y', (d: any) => y(d[secondaryDomain]))
 			.attr('width', (d: any) => Math.abs(xFrom(d[leftPrimaryDomainType]) - xFrom(0)))
 			.attr('height', (d: any) => y.bandwidth())
+			.attr('data-tooltipvalue', (d: any) => `${d[secondaryDomain]} - ${d[leftPrimaryDomainType]}`)
 		let rightBars = g
 			.append('g')
 			.selectAll('.bar')
@@ -508,6 +521,7 @@ export const generateDualAxesCenterTextBars = ({ id, data, options }: barChartPr
 			.attr('y', (d: any) => y(d[secondaryDomain]))
 			.attr('width', (d: any) => Math.abs(xFrom(d[rightPrimaryDomainType]) - xFrom(0)))
 			.attr('height', (d: any) => y.bandwidth())
+			.attr('data-tooltipvalue', (d: any) => `${d[secondaryDomain]} - ${d[rightPrimaryDomainType]}`)
 
 		let leftXAxisPlot: any = d3.axisBottom(xFrom)
 		if (xformatterObj) {
@@ -540,16 +554,16 @@ export const generateDualAxesCenterTextBars = ({ id, data, options }: barChartPr
 		if (xAxis?.labels?.left?.show) {
 			let leftTextValue: any = xAxis?.labels?.left?.label
 			let _leftSum: any
-			let _adder: any = Utilities.getSumOfObjectKey(data, leftPrimaryDomainType)
+			let _lAdder: any = Utilities.getSumOfObjectKey(data, leftPrimaryDomainType)
 			switch (xAxis?.labels?.left?.type) {
 				case 'number':
-					_leftSum = Utilities.curateValue({ value: +_adder, formatter: { format: '.2s', formatType: 'number' } })
+					_leftSum = Utilities.curateValue({ value: +_lAdder, formatter: { format: '.2s', formatType: 'number' } })
 					break
 				case 'currency':
-					_leftSum = Utilities.formatToCurrency(_adder)
+					_leftSum = Utilities.formatToCurrency(_lAdder)
 					break
 				default:
-					return (_leftSum = _adder)
+					return (_leftSum = _lAdder)
 			}
 
 			leftXAxis
@@ -587,16 +601,16 @@ export const generateDualAxesCenterTextBars = ({ id, data, options }: barChartPr
 		if (xAxis?.labels?.right?.show) {
 			let rightTextValue: any = xAxis?.labels?.right?.label
 			let _rightSum: any
-			let _adder: any = Utilities.getSumOfObjectKey(data, rightPrimaryDomainType)
-			switch (xAxis?.labels?.left?.type) {
+			let _rAdder: any = Utilities.getSumOfObjectKey(data, rightPrimaryDomainType)
+			switch (xAxis?.labels?.right?.type) {
 				case 'number':
-					_rightSum = Utilities.curateValue({ value: +_adder, formatter: { format: '.2s', formatType: 'number' } })
+					_rightSum = Utilities.curateValue({ value: +_rAdder, formatter: { format: '.2s', formatType: 'number' } })
 					break
 				case 'currency':
-					_rightSum = Utilities.formatToCurrency(_adder)
+					_rightSum = Utilities.formatToCurrency(_rAdder)
 					break
 				default:
-					return (_rightSum = _adder)
+					return (_rightSum = _rAdder)
 			}
 
 			rightXAxis.append('text').attr('y', -bounds.height).attr('x', 0).attr('dy', '1rem').attr('dx', '1.5rem').attr('class', 'inner-axis-label-lg').text(_rightSum)
@@ -616,12 +630,15 @@ export const generateDualAxesCenterTextBars = ({ id, data, options }: barChartPr
 			createTooltip(id)
 			leftBars
 				.on('mousemove', (event, d: any) => {
-					const tooltipValue: any = Object.keys(d)
-						.map(
-							(key) => `${key}: ${d[key]}
-						`
-						)
-						?.join('')
+					let mouseOverElem = event.target || event.currentTarget
+					let mouseOverElemDataset = mouseOverElem.dataset
+					const tooltipValue = mouseOverElemDataset?.tooltipvalue
+					// const tooltipValue: any = Object.keys(d)
+					// 	.map(
+					// 		(key) => `${key}: ${d[key]}
+					// 	`
+					// 	)
+					// 	?.join('')
 					renderTooltip(true, event, id, tooltipValue)
 				})
 				.on('mouseout', (event) => {
@@ -629,17 +646,24 @@ export const generateDualAxesCenterTextBars = ({ id, data, options }: barChartPr
 				})
 			rightBars
 				.on('mousemove', (event, d: any) => {
-					const tooltipValue: any = Object.keys(d)
-						.map(
-							(key) => `${key}: ${d[key]}
-						`
-						)
-						?.join('')
+					let mouseOverElem = event.target || event.currentTarget
+					let mouseOverElemDataset = mouseOverElem.dataset
+					const tooltipValue = mouseOverElemDataset?.tooltipvalue
+					// const tooltipValue: any = Object.keys(d)
+					// 	.map(
+					// 		(key) => `${key}: ${d[key]}
+					// 	`
+					// 	)
+					// 	?.join('')
 					renderTooltip(true, event, id, tooltipValue)
 				})
 				.on('mouseout', (event) => {
 					renderTooltip(false, event, id)
 				})
+		}
+		if (isClickable?.clickable) {
+			leftBars.on('click', (e, d) => isClickable?.onChartItemClick && isClickable.onChartItemClick(d))
+			rightBars.on('click', (e, d) => isClickable?.onChartItemClick && isClickable.onChartItemClick(d))
 		}
 	}
 }

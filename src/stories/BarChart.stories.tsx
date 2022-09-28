@@ -29,7 +29,8 @@ VerticalBar.args = {
 			position: 'bottom',
 			domain: 'type',
 			type: 'string',
-			label: 'Type'
+			label: 'Type',
+			fold: true
 		},
 		yAxis: {
 			show: true,
@@ -42,6 +43,12 @@ VerticalBar.args = {
 			type: 'number',
 			label: 'Value',
 			showTicks: true
+		},
+		isClickable: {
+			clickable: true,
+			onChartItemClick: (data) => {
+				console.log(data)
+			}
 		}
 	}
 }
@@ -74,7 +81,14 @@ HorizontalBar.args = {
 			position: 'left',
 			domain: 'type',
 			type: 'string',
-			label: 'Type'
+			label: 'Type',
+			fold: true
+		},
+		isClickable: {
+			clickable: true,
+			onChartItemClick: (data) => {
+				console.log(data)
+			}
 		}
 	}
 }

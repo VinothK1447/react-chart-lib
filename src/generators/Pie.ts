@@ -8,7 +8,7 @@ import Utilities from '../utils/Utilities'
 
 export const setupPie = (obj: pieChartProps) => {
 	let { id, data, options } = obj
-	let { domain = '', type = '', isDonut, arcSize, centerText } = options
+	let { domain = '', type = '', isDonut, arcSize, centerText, isClickable } = options
 	let { svg, bounds } = getSVGInContext({ id })
 
 	if (data && data.length) {
@@ -49,7 +49,11 @@ export const setupPie = (obj: pieChartProps) => {
 		let centerTextValue: any
 		let _adder: any = 0
 		if (centerText?.show) {
-			_adder = Utilities.getSumOfObjectKey(data, type)
+			if (centerText?.value) {
+				_adder = centerText?.value
+			} else {
+				_adder = Utilities.getSumOfObjectKey(data, type)
+			}
 			switch (centerText.type) {
 				case 'number':
 					centerTextValue = Utilities.curateValue({ value: +_adder, formatter: centerText.formatter })
@@ -77,6 +81,9 @@ export const setupPie = (obj: pieChartProps) => {
 			generateLegend({ id, data, options, radius, type: 'pie' })
 		} else {
 			svg.select('#data-group').attr('transform', `translate(${bounds.width / 2}, ${bounds.height / 2})`)
+		}
+		if (isClickable?.clickable) {
+			arc.on('click', (e, d) => isClickable?.onChartItemClick && isClickable.onChartItemClick(d.data))
 		}
 	} else {
 		generateNoDataBlock({ id })

@@ -32,11 +32,14 @@ export const generateAreaAndLine = ({ id, data, options }: areaTooltipProps) => 
 		const yAxisScale = getYAxisScale()
 		renderAreaLineTooltip({ id, data, xAxisScale, yAxisScale })
 	}
+	if (options.isClickable?.clickable) {
+		svg.on('click', (e) => options.isClickable?.onChartItemClick && options.isClickable.onChartItemClick(e))
+	}
 }
 
 export const generateStackedArea = ({ id, data, options }: areaChartProps) => {
 	let { svg, bounds } = getSVGInContext({ id })
-	let { legend, xAxis, interactive } = options
+	let { legend, xAxis, interactive, isClickable } = options
 	let primaryDomain = xAxis?.domain
 	let isInteractive = interactive
 	let tmpData: any = data
@@ -123,5 +126,8 @@ export const generateStackedArea = ({ id, data, options }: areaChartProps) => {
 		if (legend?.show) {
 			generateLegend({ id, data: keys, options, type: 'area' })
 		}
+	}
+	if (isClickable?.clickable) {
+		areaChart.on('click', (e) => isClickable?.onChartItemClick && isClickable.onChartItemClick(e))
 	}
 }

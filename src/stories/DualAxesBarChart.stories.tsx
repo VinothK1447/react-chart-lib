@@ -36,6 +36,12 @@ VerticalDualAxesBar.args = {
 			},
 			domain: 'value',
 			type: 'number'
+		},
+		isClickable: {
+			clickable: true,
+			onChartItemClick: (data) => {
+				console.log(data)
+			}
 		}
 	}
 }
@@ -62,6 +68,12 @@ HorizontalDualAxesBar.args = {
 			position: 'left',
 			domain: 'label',
 			type: 'string'
+		},
+		isClickable: {
+			clickable: true,
+			onChartItemClick: (data) => {
+				console.log(data)
+			}
 		}
 	}
 }

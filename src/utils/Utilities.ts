@@ -42,10 +42,15 @@ export default class Utilities {
 	// 	})
 	// }
 
-	static wrap(text: any, width: number, orient: string) {
+	static wrap(text: any, width: number, orient: string, wrapLength: number = 10) {
 		text.each(function (el: any) {
 			if (typeof el === 'string') {
-				let _tmpArr = el.split(' ')
+				let sliced = el
+				if (sliced.length > wrapLength) {
+					sliced = sliced.slice(0, wrapLength)
+					sliced += '...'
+				}
+				let _tmpArr = sliced.split(' ')
 				//@ts-ignore
 				let txtEl = d3.select(this)
 				let lineNumber = 0
@@ -120,7 +125,7 @@ export default class Utilities {
 	}
 
 	static curateValue({ value, formatter }: curateFnProps) {
-		if (!value) {
+		if (value === null || value === undefined) {
 			return false
 		}
 		let formatValue: any

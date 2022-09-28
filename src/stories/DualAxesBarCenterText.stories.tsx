@@ -47,6 +47,12 @@ HorizontalDualAxesBarCenterText.args = {
 			position: 'right',
 			domain: 'status',
 			type: 'string'
+		},
+		isClickable: {
+			clickable: true,
+			onChartItemClick: (data) => {
+				console.log(data)
+			}
 		}
 	}
 }

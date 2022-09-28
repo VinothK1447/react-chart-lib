@@ -30,7 +30,13 @@ ProgressBarChart.args = {
 			}
 		},
 		domain: 'Invested',
-		type: 'Proposed'
+		type: 'Proposed',
+		isClickable: {
+			clickable: true,
+			onChartItemClick: (data) => {
+				console.log(data)
+			}
+		}
 	}
 }
 
@@ -41,6 +47,12 @@ GradientProgressBarChart.args = {
 	options: {
 		showTooltip: true,
 		domain: 'Invested',
-		type: 'Proposed'
+		type: 'Proposed',
+		isClickable: {
+			clickable: true,
+			onChartItemClick: (data) => {
+				console.log(data)
+			}
+		}
 	}
 }

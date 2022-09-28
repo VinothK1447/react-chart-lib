@@ -39,6 +39,12 @@ VerticalStackedBar.args = {
 				format: '.2s'
 			},
 			type: 'number'
+		},
+		isClickable: {
+			clickable: true,
+			onChartItemClick: (data) => {
+				console.log(data)
+			}
 		}
 	}
 }
@@ -69,6 +75,12 @@ HorizontalStackedBar.args = {
 			position: 'left',
 			domain: 'state',
 			type: 'string'
+		},
+		isClickable: {
+			clickable: true,
+			onChartItemClick: (data) => {
+				console.log(data)
+			}
 		}
 	}
 }

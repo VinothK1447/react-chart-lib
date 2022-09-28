@@ -36,6 +36,12 @@ SimpleArea.args = {
 			type: 'number',
 			showTicks: true,
 			noOfTicks: 3
+		},
+		isClickable: {
+			clickable: true,
+			onChartItemClick: (data) => {
+				console.log(data)
+			}
 		}
 	}
 }
@@ -67,6 +73,12 @@ StackedArea.args = {
 			position: 'left',
 			domain: ['tests', 'odis', 't20is', 't20s'],
 			type: 'number'
+		},
+		isClickable: {
+			clickable: true,
+			onChartItemClick: (data) => {
+				console.log(data)
+			}
 		}
 	}
 }
@@ -94,6 +106,12 @@ InteractiveStackedArea.args = {
 			position: 'left',
 			domain: ['Net', 'Gross', 'Other'],
 			type: 'number'
+		},
+		isClickable: {
+			clickable: true,
+			onChartItemClick: (data) => {
+				console.log(data)
+			}
 		}
 	}
 }

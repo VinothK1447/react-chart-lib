@@ -26,6 +26,12 @@ ComparisonChart.args = {
 				formatType: 'currency',
 				format: 'USD'
 			}
+		},
+		isClickable: {
+			clickable: true,
+			onChartItemClick: (data) => {
+				console.log(data)
+			}
 		}
 	}
 }

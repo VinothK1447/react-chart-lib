@@ -56,6 +56,12 @@ VerticalDualAxesLineBar.args = {
 			},
 			domain: ['inflow', 'outflow'],
 			type: 'number'
+		},
+		isClickable: {
+			clickable: true,
+			onChartItemClick: (data) => {
+				console.log(data)
+			}
 		}
 	}
 }
@@ -101,6 +107,12 @@ VerticalDualAxesCircledBar.args = {
 			},
 			domain: ['inflow', 'outflow'],
 			type: 'number'
+		},
+		isClickable: {
+			clickable: true,
+			onChartItemClick: (data) => {
+				console.log(data)
+			}
 		}
 	}
 }
@@ -143,6 +155,12 @@ HorizontalBiDirectionalDualAxesBar.args = {
 			domain: 'type',
 			type: 'string',
 			fold: false
+		},
+		isClickable: {
+			clickable: true,
+			onChartItemClick: (data) => {
+				console.log(data)
+			}
 		}
 	}
 }

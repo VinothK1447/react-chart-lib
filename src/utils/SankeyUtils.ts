@@ -122,11 +122,11 @@ export default class SankeyUtils {
 
 	generateLinks(svg: any, links: any) {
 		d3.select(svg)
-			.selectAll('.link')
+			.selectAll('.sankey-link')
 			.data(links)
 			.enter()
 			.append('path')
-			.attr('class', 'link')
+			.attr('class', 'sankey-link')
 			.attr('d', (d: any) => d3Sankey.sankeyLinkHorizontal()(d))
 			.style('stroke', (d: any, index: number) => `url(#linear-gradient-link-${index})`)
 			.style('stroke-width', (d: any) => {

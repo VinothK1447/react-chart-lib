@@ -35,10 +35,10 @@ export const generateAxes = ({ id, data, options, type }: any) => {
 			}
 		}
 		if (xAxisScale && xAxisScale.hasOwnProperty('bandwidth') && xAxis?.fold) {
-			d3.selectAll('.tick text').call(Utilities.wrap, xAxisScale.bandwidth(), orient)
+			d3.selectAll('.tick.x text').call(Utilities.wrap, xAxisScale.bandwidth(), orient, xAxis?.wrapLength)
 		}
 		if (yAxisScale && yAxisScale.hasOwnProperty('bandwidth') && yAxis?.fold) {
-			d3.selectAll('.tick text').call(Utilities.wrap, yAxisScale.bandwidth(), orient)
+			d3.selectAll('.tick.y text').call(Utilities.wrap, yAxisScale.bandwidth(), orient, yAxis?.wrapLength)
 		}
 	} else {
 		generateNoDataBlock({ id })
@@ -161,7 +161,7 @@ const generateAxis = ({ id, data, axisType, axisOpts, orient, grouped, stack, du
 			axisPlot.ticks(axisOpts.noOfTicks)
 		}
 		let axis = svg.append('g').call(axisPlot).attr('transform', transformer)
-		axis.selectAll('.tick line').attr('class', `${axisType}`)
+		axis.selectAll('.tick').attr('class', `tick ${axisType}`)
 		if (!axisOpts.hasOwnProperty('showDomain') || !showDomain) {
 			axis.select('.domain').remove()
 		}

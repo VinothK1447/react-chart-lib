@@ -40,7 +40,13 @@ Donut.args = {
 		},
 		// arcSize: 'lg',
 		domain: 'browser',
-		type: 'percent'
+		type: 'percent',
+		isClickable: {
+			clickable: true,
+			onChartItemClick: (data) => {
+				console.log(data)
+			}
+		}
 	}
 }
 
@@ -57,6 +63,12 @@ Pie.args = {
 			label: ['browser']
 		},
 		domain: 'browser',
-		type: 'percent'
+		type: 'percent',
+		isClickable: {
+			clickable: true,
+			onChartItemClick: (data) => {
+				console.log(data)
+			}
+		}
 	}
 }

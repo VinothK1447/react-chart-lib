@@ -32,6 +32,13 @@ LineBarChart.args = {
 			}
 		},
 		domain: 'type',
-		type: 'amount'
+		type: 'amount',
+		wrapLength: 35,
+		isClickable: {
+			clickable: true,
+			onChartItemClick: (data) => {
+				console.log(data)
+			}
+		}
 	}
 }

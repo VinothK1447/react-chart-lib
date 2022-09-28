@@ -40,6 +40,12 @@ GroupedVerticalBar.args = {
 				format: '.2s'
 			},
 			type: 'number'
+		},
+		isClickable: {
+			clickable: true,
+			onChartItemClick: (data) => {
+				console.log(data)
+			}
 		}
 	}
 }
@@ -79,6 +85,12 @@ GroupedHorizontalBar.args = {
 			position: 'left',
 			domain: 'state',
 			type: 'string'
+		},
+		isClickable: {
+			clickable: true,
+			onChartItemClick: (data) => {
+				console.log(data)
+			}
 		}
 	}
 }
@@ -119,6 +131,12 @@ GroupedHorizontalBarWithInternalLabels.args = {
 			position: 'left',
 			domain: 'domain',
 			type: 'string'
+		},
+		isClickable: {
+			clickable: true,
+			onChartItemClick: (data) => {
+				console.log(data)
+			}
 		}
 	}
 }
